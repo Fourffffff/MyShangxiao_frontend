@@ -16,7 +16,8 @@
         <text>{{ author }}</text>
       </view>
       <view class="likes">
-        <text class="iconfont">&#xe60c;</text>
+        <uni-icons type="hand-up-filled" v-if="like" color="#91bf6f"></uni-icons>
+        <uni-icons type="hand-up" v-if="!like" color="#91bf6f"></uni-icons>
         <text>{{ likes }}</text>
       </view>
     </view>
@@ -32,7 +33,8 @@ const props = defineProps({
   desc: { type: String, default: '内容内容内容内容内容内容内容内容...' },
   author: { type: String, default: '作者' },
   avatarUrl: { type: String, default: '/static/images/avatar.png' },
-  likes: { type: Number, default: 10 }
+  like: { type: Boolean, default: false },
+  likes:{type:Number,default:10}
 })
 
 function handleImgError(e) {

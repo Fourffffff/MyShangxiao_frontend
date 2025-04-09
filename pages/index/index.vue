@@ -33,7 +33,7 @@
 	  <NoteCard imageUrl="/common/images/test.jpg"/>
 	  <NoteCard imageUrl="/common/images/index.png"/>
 	  <NoteCard imageUrl="/common/images/test.png"/>
-	  <NoteCard imageUrl="/common/images/test"/>
+	  <NoteCard imageUrl="/common/images/test.jpg"/>
 	</view>
 
   </view>
