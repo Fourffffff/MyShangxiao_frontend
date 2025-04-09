@@ -11,6 +11,42 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : ""
+				
+			}
+		},
+		{
+			"path" : "pages/register/register",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/mine/mine",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/notes/notes",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/school_discussion/school_discussion",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/jobs/jobs",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
 			}
 		}
 	],
@@ -19,6 +55,42 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"selectedColor": "#91bf6f",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "/common/images/index.png",
+				"selectedIconPath": "/common/images/index_se.png"
+				
+			},
+			{
+				"pagePath": "pages/notes/notes",
+				"text": "笔记",
+				"iconPath": "/common/images/notes.png",
+				"selectedIconPath": "/common/images/notes_se.png"
+			},
+			{
+				"pagePath": "pages/school_discussion/school_discussion",
+				"text": "校园评价",
+				"iconPath": "/common/images/smile.png",
+				"selectedIconPath": "/common/images/smile_se.png"
+			},
+			{
+				"pagePath": "pages/jobs/jobs",
+				"text": "工作",
+				"iconPath": "/common/images/jobs.png",
+				"selectedIconPath": "/common/images/jobs_se.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "/common/images/mine.png",
+				"selectedIconPath": "/common/images/mine_se.png"
+			}
+		]
 	},
 	"uniIdRouter": {}
 }

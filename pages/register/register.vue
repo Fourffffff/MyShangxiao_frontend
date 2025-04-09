@@ -7,12 +7,24 @@
     <view class="form-container">
       <view class="input-group">
         <text class="label">邮箱</text>
-        <input 
+        <input
           class="input" 
           type="text" 
           placeholder="请输入邮箱"
           v-model="formData.email"
         />
+        
+      </view>
+      <view class="input-group">
+        <text class="label">验证码</text>
+		
+        <input 
+          class="input email" 
+          type="text" 
+          placeholder="请输入验证码"
+          v-model="formData.verify"
+        />
+		<view class="getVerify">获取验证码</view>
       </view>
       
       <view class="input-group">
@@ -24,11 +36,21 @@
           v-model="formData.password"
         />
       </view>
+	  <view class="input-group">
+        <text class="label">再次输入密码</text>
+        <input 
+          class="input" 
+          type="password" 
+          placeholder="请再次输入密码"
+          v-model="formData.password2"
+        />
+      </view>
+	  
       
-      <button class="login-btn" @click="handleLogin">登录</button>
+      <button class="login-btn" @click="handleLogin">注册</button>
       
-      <view class="register-link" @click="gotoRegister">
-        <text>注册？</text>
+      <view class="register-link" @click="gotoLogin">
+        <text>登录？</text>
       </view>
     </view>
     <view class="footer">
@@ -45,13 +67,15 @@ import { onLoad } from '@dcloudio/uni-app';
 // 表单数据
 const formData = ref({
   email: '',
-  password: ''
+  verify:'',
+  password: '',
+  password2:''
 });
 
-const gotoRegister=()=>{
+const gotoLogin=()=>{
 	uni.redirectTo({
-		url:'/pages/register/register'
-	}) 
+		url:'/pages/login/login'
+	})
 }
 // 登录处理
 const handleLogin = () => {
@@ -125,15 +149,16 @@ onLoad(() => {
 	
     .label {
 		display: flex;
-		align-items: center;
-		justify-content: center;
+		align-items: left;
+		justify-content: left;
       white-space: nowrap;
-	  text-align: center;
+	  text-align: left;
 	  line-height: 100%;
       font-size: 28rpx;
       margin-bottom: 16rpx;
 	  margin-right: 32rpx;
       color: #333;
+	  width: 40%;
     }
     
     .input {
@@ -145,6 +170,22 @@ onLoad(() => {
       box-sizing: border-box;
       font-size: 28rpx;
     }
+	.email{
+		width: 50%;
+	}
+	.getVerify{
+		width: 40%;
+		height: 80rpx;
+		margin-left: 30rpx;
+		background-color: $colorr;
+		color: white;
+		border-radius: 20rpx;
+		justify-content: center;
+		display: flex;
+		align-items: center;
+		white-space: nowrap;
+		font-size: 28rpx;
+	}
   }
   
   .login-btn {
