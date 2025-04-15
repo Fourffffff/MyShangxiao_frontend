@@ -11,7 +11,7 @@
       <swiper-item v-for="(item, index) in 4" :key="index">
         <view class="img-wrapper">
             <image src="/common/images/test.jpg" mode="aspectFit" />
-          </view>
+        </view>
       </swiper-item>
     </swiper>
 	<view class="category">
@@ -32,7 +32,7 @@
 	<view class="waterfall">
 	  <NoteCard imageUrl="/common/images/test.jpg"/>
 	  <NoteCard imageUrl="/common/images/index.png"/>
-	  <NoteCard imageUrl="/common/images/test.png"/>
+	  <NoteCard imageUrl="/common/images/test.jpg"/>
 	  <NoteCard imageUrl="/common/images/test.jpg"/>
 	</view>
 
@@ -49,6 +49,7 @@
 		padding: 30rpx 0;
 	  width: 750rpx;
 	  height: 400rpx;
+	  border-radius: 30rpx;
 	  swiper {
 	    width: 100%;
 	    height: 100%;
@@ -62,13 +63,13 @@
 	  .img-wrapper {
 	    width: 100%;
 	    height: 100%;
-	    
+	    border-radius: 30rpx;
 	    overflow: hidden; 
 	  }
 	  image {
 	    width: 100%;
 	    height: 100%;
-	    border-radius: 10rpx;
+	    border-radius: 30rpx;
 	  }
 	}
 	
@@ -127,7 +128,7 @@
 	  NoteCard {
 	    break-inside: avoid; // 防止卡片被打断
 	    
-	    width: 100%;
+	    width: 10%;
 	  }
 	}
 
