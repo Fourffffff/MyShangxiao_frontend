@@ -28,7 +28,7 @@
 		   </uni-popup>
 		<view class="SchoolTitleBar">
 			<img src="/common/images/leaf_left.png" alt="" />
-			<text>教学楼</text>
+			<text>{{currentType}}</text>
 			<img src="/common/images/leaf_right.png"></img>
 		</view>
 		 
@@ -54,7 +54,7 @@ const categories = ref([
 
 // 控制弹窗
 const categoryPopup = ref(null);
-
+const currentType=ref("教学楼");
 const openCategoryPopup = () => {
   categoryPopup.value.open(); // 打开弹窗
 };
@@ -67,6 +67,7 @@ const selectCategory = (item) => {
   console.log("选择了:", item.name);
   closeCategoryPopup();
   // 这里可以添加分类选择后的逻辑
+  currentType.value=item.name;
 };
 </script>
 

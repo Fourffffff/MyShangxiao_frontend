@@ -1,5 +1,5 @@
-<template>
-  <view class="card">
+<template >
+  <view class="card" @click="to_note_info">
     <!-- 图片部分 -->
     <image class="card-image" :src="imageUrl" mode="widthFix" @error="handleImgError" />
 
@@ -39,6 +39,12 @@ const props = defineProps({
 
 function handleImgError(e) {
   console.log('图片加载失败:', e)
+}
+function to_note_info(){
+	console.log('click card')
+	uni.navigateTo({
+		url:'/pages/note_info/note_info'
+	})
 }
 </script>
 
