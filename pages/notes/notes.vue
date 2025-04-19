@@ -3,7 +3,7 @@
 		<view class="seachAndPost">
 			
 			<SearchBar></SearchBar>
-			<img src="/common/images/add.png" alt="" />
+			<img src="/common/images/add.png" alt="" @click="toNotePosting"/>
 		</view>
 
 		<view class="notes">
@@ -13,7 +13,12 @@
 </template>
 
 <script setup>
-
+import { ref } from 'vue';
+function toNotePosting(){
+	uni.navigateTo({
+		url:'/pages/notePosting/notePosting'
+	})
+}
 </script>
 
 <style lang="scss" scoped>

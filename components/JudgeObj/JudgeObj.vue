@@ -103,6 +103,7 @@ const props = defineProps({
 					display: flex;
 					justify-content: right;
 					font-size: 40rpx;
+					font-weight: bold;
 					color: $colorr;
 				}
 				.stars{
