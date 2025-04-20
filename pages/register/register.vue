@@ -24,7 +24,7 @@
           placeholder="请输入验证码"
           v-model="formData.verify"
         />
-		<view class="getVerify">获取验证码</view>
+		<view class="getVerify" @click="send_verify_code">获取验证码</view>
       </view>
       
       <view class="input-group">
@@ -94,26 +94,20 @@ const handleLogin = () => {
     });
     return;
   }
-  
-  // 这里添加实际的登录逻辑
-  uni.showLoading({
-    title: '登录中...'
-  });
-  
-  // 模拟登录请求
-  setTimeout(() => {
-    uni.hideLoading();
-    uni.showToast({
-      title: '登录成功',
-      icon: 'success'
-    });
-    // 登录成功后跳转到首页
-    uni.reLaunch({
-      url: '/pages/index/index'
-    });
-  }, 1500);
 };
 
+function send_verify_code(){
+	uni.request({
+		url:'http://127.0.0.1:8000/user/send_code',
+		method:'POST',
+		data:{
+			email:formData.value.email
+		},
+		success:(res)=>{
+			console.log(res.data);
+		}
+	})
+}
 onLoad(() => {
   // 页面加载时可以做的初始化操作
 });
@@ -146,7 +140,8 @@ onLoad(() => {
   .input-group {
     margin-bottom: 40rpx;
     display: flex;
-	
+	justify-content: center;
+	align-items: center;
     .label {
 		display: flex;
 		align-items: left;

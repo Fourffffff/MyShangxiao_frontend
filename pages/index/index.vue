@@ -39,14 +39,18 @@
   </view>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+let id=uni.getStorageSync("id");
+if(id=='')
+	id=1
 
 </script>
 
 <style lang="scss" scoped>
 .home{
 	.banner {
-		padding: 30rpx 0;
+	  padding: 30rpx 0;
 	  width: 750rpx;
 	  height: 400rpx;
 	  border-radius: 30rpx;

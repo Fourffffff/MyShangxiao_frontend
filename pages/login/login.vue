@@ -9,9 +9,10 @@
         <text class="label">邮箱</text>
         <input 
           class="input" 
-          type="text" 
+          type="email" 
           placeholder="请输入邮箱"
           v-model="formData.email"
+		  required
         />
       </view>
       
@@ -41,7 +42,7 @@
 <script setup>
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
-
+import { request } from '../../utils/request';
 // 表单数据
 const formData = ref({
   email: '',
@@ -54,13 +55,25 @@ const gotoRegister=()=>{
 	}) 
 }
 // 登录处理
-const handleLogin = () => {
+const handleLogin = async () => {
+  const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   if (!formData.value.email) {
     uni.showToast({
       title: '请输入邮箱',
       icon: 'none'
     });
+	 
+	 
     return;
+  }
+  
+  if(!regex.test(formData.value.email)){
+	  uni.showToast({
+	    title: '邮箱格式不正确',
+	    icon: 'none'
+	  });
+	
+	  return;
   }
   
   if (!formData.value.password) {
@@ -71,23 +84,26 @@ const handleLogin = () => {
     return;
   }
   
-  // 这里添加实际的登录逻辑
-  uni.showLoading({
-    title: '登录中...'
-  });
   
-  // 模拟登录请求
-  setTimeout(() => {
-    uni.hideLoading();
-    uni.showToast({
-      title: '登录成功',
-      icon: 'success'
-    });
-    // 登录成功后跳转到首页
-    uni.reLaunch({
-      url: '/pages/index/index'
-    });
-  }, 1500);
+  let res=await request({
+	  url:'/user/login',
+	  method:'Post',
+	  data:{
+		  email:formData.value.email,
+		  password:formData.value.password
+	  },
+
+  })
+  
+  if(res.code==200){
+	  
+	  uni.setStorageSync('id', res.data);
+	  
+	  uni.switchTab({
+	  	url:'/pages/index/index'
+	  })
+  }
+	
 };
 
 onLoad(() => {
