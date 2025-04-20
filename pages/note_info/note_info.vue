@@ -48,29 +48,23 @@
 				</view>
 			</view>
 		</view>
-		<view class="comments" v-for="i in 10">
-			<NoteComment
-				username="流星"
-				avatarUrl="/common/images/test.jpg"
-				:time="time"
-				comment="这个产品真的很好用，界面清爽，功能也很实用！"
-				:likeCount="100"
-				:islike="true"
-				:showStars="false"
-			/>
-
-
-		</view>
-		<view class="commentPosting">
-			<view class="left">
-				点击输入评论
-			</view>
-			<view class="right">
-				<view class="btn">
-					发表
-				</view>
+		<view class="commentList">
+			<view class="comment" v-for="i in 10">
+				<NoteComment
+					username="流星"
+					avatarUrl="/common/images/test.jpg"
+					:time="time"
+					comment="这个产品真的很好用，界面清爽，功能也很实用！"
+					:likeCount="100"
+					:islike="true"
+					:starNum="4"
+				/>
+			
+			
 			</view>
 		</view>
+		
+		<CommentPosting></CommentPosting>
 	</view>
 </template>
 
@@ -185,38 +179,8 @@ function preview(){
 	}
 	
 }
-.commentPosting{
-	
-	padding:0 16rpx;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	position: fixed;
-	bottom: 0;
-		left: 0;
-		width: 100%;
-		z-index: 999;
-		background-color: #fff; // 防止透明
-	.left{
-		flex:6;
-		margin: 16rpx;
-		padding:16rpx 24rpx;
-		background-color: #efefef;
-		border-radius:50rpx;
-		color:#cecece;
-	}
-	.right{
-		display: flex;
-		flex:4;
-		justify-content: center;
-	}
-	.btn{
-		border: 1px solid $colorr;
-		border-radius: 50rpx;
-		background-color: $colorr;
-		padding:8rpx 48rpx;
-		color: #efefef;
-		text-align: center;
-	}
+.commentList{
+	padding-bottom: 120rpx
 }
+
 </style>

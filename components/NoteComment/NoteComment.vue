@@ -5,9 +5,10 @@
 			<view class="info">
 				<view class="name">{{ username }}</view>
 				<view class="starsAndTime">
-					<template v-if="showStars">
+					<template v-if="starNum">
 						<view class="stars">
-							<uni-icons v-for="i in 5" :key="i" type="star-filled" size="18" color="#f8b500" />
+							<uni-icons v-for="i in starNum" :key="i" type="star-filled" size="18" color="#f8b500" />
+							<uni-icons v-for="i in 5-starNum" :key="i" type="star" size="18" color="#f8b500" />
 						</view>
 						<view class="time">{{ time }}</view>
 					</template>
@@ -38,8 +39,8 @@ defineProps({
 	time: String,
 	comment: String,
 	likeCount: Number,
-	showStars: Boolean,
-	islike:Boolean
+	islike:Boolean,
+	starNum:Number
 })
 </script>
 

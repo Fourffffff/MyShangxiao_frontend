@@ -33,7 +33,7 @@
 		</view>
 		 
 		<view class="objCards">
-			<view class="objCard" v-for="i in 10">
+			<view class="objCard" v-for="i in 10" @click="goto_school_judge_info">
 				<JudgeObj></JudgeObj>
 			</view>
 		</view>
@@ -69,6 +69,12 @@ const selectCategory = (item) => {
   // 这里可以添加分类选择后的逻辑
   currentType.value=item.name;
 };
+
+function goto_school_judge_info(){
+	uni.navigateTo({
+		url:'/pages/school_judge_info/school_judge_info'
+	})
+}
 </script>
 
 <style lang="scss" scoped>
