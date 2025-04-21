@@ -23,12 +23,12 @@
 			{{ comment }}
 		</view>
 
-		<view class="footer">
+		<!-- <view class="footer">
 			<view class="like">
 				<uni-icons :type="islike?'hand-up-filled':'hand-up'" size="20" color="#91bf6f" />
 				<text class="like-count">{{ likeCount }}</text>
 			</view>
-		</view>
+		</view> -->
 	</view>
 </template>
 

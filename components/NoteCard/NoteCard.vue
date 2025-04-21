@@ -1,5 +1,5 @@
 <template >
-  <view class="card" @click="to_note_info">
+  <view class="card" >
     <!-- 图片部分 -->
     <image class="card-image" :src="imageUrl" mode="widthFix" @error="handleImgError" />
 
@@ -7,7 +7,7 @@
     <view class="card-title">{{ title }}</view>
 
     <!-- 简要描述 -->
-    <view class="card-desc">{{ desc }}</view>
+    <view class="card-desc">{{ content }}</view>
 
     <!-- 底部 作者 + 点赞 -->
     <view class="card-footer">
@@ -30,7 +30,7 @@ import { ref } from 'vue'
 const props = defineProps({
   imageUrl: { type: String, default: '/common/images/test.jpg' },
   title: { type: String, default: '标题标题' },
-  desc: { type: String, default: '内容内容内容内容内容内容内容内容...' },
+  content: { type: String, default: '内容内容内容内容内容内容内容内容...' },
   author: { type: String, default: '作者' },
   avatarUrl: { type: String, default: '/common/images/avatar.png' },
   like: { type: Boolean, default: false },	
@@ -41,7 +41,6 @@ function handleImgError(e) {
   console.log('图片加载失败:', e)
 }
 function to_note_info(){
-	console.log('click card')
 	uni.navigateTo({
 		url:'/pages/note_info/note_info'
 	})
@@ -58,7 +57,7 @@ function to_note_info(){
   
   .card-image {
     width: 100%;
-    max-height: 300rpx;
+    max-height: 300rpx;	
     background-color: #eee;
     display: block;
   }

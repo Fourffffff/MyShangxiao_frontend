@@ -49,16 +49,15 @@
 			</view>
 		</view>
 		<view class="commentList">
-			<view class="comment" v-for="i in 10">
+			<view class="comment" v-for="comment in comments">
 				<NoteComment
-					username="流星"
-					avatarUrl="/common/images/test.jpg"
-					:time="time"
-					comment="这个产品真的很好用，界面清爽，功能也很实用！"
-					:likeCount="100"
-					:islike="true"
-					:starNum="4"
-				/>
+				      :username="comment.username"          
+				      :avatarUrl="comment.avatarUrl"        
+				      :time="comment.time"                 
+				      :comment="comment.comment"            
+				      :likeCount="comment.likeCount"        
+				      :islike="comment.islike"              
+				    />
 			
 			
 			</view>
@@ -70,6 +69,10 @@
 
 <script setup>
 import { ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app'
+import { request } from '../../utils/request';
+
+
 const imageUrls = ref(['/common/images/test.jpg','/common/images/test.jpg'])
 const title = ref('title')
 const content=ref('contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent')
@@ -80,6 +83,9 @@ const isliked=ref(false)
 isliked.value=true
 const isFav=ref(false)
 isFav.value=true
+const id=uni.getStorageSync("id")
+const comments=ref([])
+
 function formatDate(date) {
   const y = date.getFullYear()
   const m = String(date.getMonth() + 1).padStart(2, '0')
@@ -98,9 +104,31 @@ function preview(){
 		urls:imageUrls.value
 	})
 }
-// function goBack(){
-// 	uni.navigateBack()
-// }
+
+const get_note=async(noteId)=>{
+	let res=await request({
+		url:'/note/get_one',
+		data:{
+			userId:id,
+			noteId:noteId
+		}
+	})
+	console.log(res.data.comments);
+	title.value = res.data.note.title || '默认标题';
+	content.value = res.data.note.content || '默认内容';
+	likeCount.value = res.data.note.likeCount || 0;
+	favCount.value = res.data.note.favCount || 0;
+	isliked.value = res.data.isliked;
+	isFav.value = res.data.isfav;
+	comments.value = res.data.comments || [];
+}
+
+
+
+onLoad((options)=>{
+	const noteId=options.id
+	get_note(noteId)
+})
 </script>
 
 <style lang="scss" scoped>

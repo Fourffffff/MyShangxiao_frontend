@@ -34,7 +34,11 @@
 		 
 		<view class="objCards">
 			<view class="objCard" v-for="i in 10" @click="goto_school_judge_info">
-				<JudgeObj></JudgeObj>
+				<JudgeObj
+					
+				>
+					
+				</JudgeObj>
 			</view>
 		</view>
 	</view>

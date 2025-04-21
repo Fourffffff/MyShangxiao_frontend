@@ -24,25 +24,82 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-
+import { request } from '../../utils/request'
 const images = ref([])
 const title = ref('')
 const content = ref('')
-
+const id=uni.getStorageSync("id")
 function chooseImage() {
 	uni.chooseImage({
-		count: 1,
+		count: 9,
 		success: (res) => {
 			images.value.push(...res.tempFilePaths)
 		}
 	})
 }
 
-function submit() {
-	console.log('标题：', title.value)
-	console.log('正文：', content.value)
-	console.log('图片：', images.value)
+const submit = async () => {
+	if (!title.value || !content.value) {
+		uni.showToast({ title: '标题或内容不能为空', icon: 'none' })
+		return
+	}
+
+	let uploadedImageUrls = []
+
+	// 一张张上传图片
+	for (const path of images.value) {
+		try {
+			const uploadRes = await new Promise((resolve, reject) => {
+				uni.uploadFile({
+					url: 'http://localhost:8000/note/upload_img',
+					filePath: path,
+					name: 'file',
+					success: resolve,
+					fail: reject
+				})
+			})
+
+			const result = JSON.parse(uploadRes.data)
+			
+			if (result.code === 200) {
+				uploadedImageUrls.push(result.data)
+			} else {
+				uni.showToast({ title: '图片上传失败', icon: 'none' })
+				return
+			}
+		} catch (err) {
+			console.error('上传失败', err)
+			uni.showToast({ title: '网络错误', icon: 'none' })
+			return
+		}
+	}
+	
+	// 图片全部上传完成后，再发文章数据
+	let res = await request({
+		url: '/note/note_post',
+		method: 'POST',
+		data: {
+			title: title.value,
+			content: content.value,
+			id: id,
+			images: uploadedImageUrls // 上传后的服务器图片URL
+		}
+	})
+
+	if (res.code === 200) {
+		uni.showToast({ title: '发布成功', icon: 'success' })
+		// 清空表单
+		title.value = ''
+		content.value = ''
+		images.value = []
+		uni.switchTab({
+			url:'/pages/notes/notes'
+		})
+	} else {
+		uni.showToast({ title: '发布失败', icon: 'none' })
+	}
 }
+
 </script>
 
 

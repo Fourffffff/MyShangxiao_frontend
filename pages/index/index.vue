@@ -30,10 +30,16 @@
 		</view>
 	</view>
 	<view class="waterfall">
-	  <NoteCard imageUrl="/common/images/test.jpg"/>
-	  <NoteCard imageUrl="/common/images/index.png"/>
-	  <NoteCard imageUrl="/common/images/test.jpg"/>
-	  <NoteCard imageUrl="/common/images/test.jpg"/>
+	  <NoteCard v-for="note in notes"
+	        :imageUrl="note.images[0]"
+	        :title="note.title"
+	        :content="note.content"
+	        :author="note.username"
+	        :avatarUrl="note.avatarUrl"
+	        :like="note.isliked"
+	        :likes="note.likes"
+			@click="to_note_info(note.id)"
+	      />
 	</view>
 
   </view>
@@ -41,9 +47,41 @@
 
 <script setup>
 import { ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app'
+import { request } from '../../utils/request';
+
+
 let id=uni.getStorageSync("id");
+const notes=ref([])
 if(id=='')
 	id=1
+
+function to_note_info(id){
+	uni.navigateTo({
+		url:`/pages/note_info/note_info?id=${id}`
+	})
+}
+const getNotes = async()=>{
+	
+	let res = await request({
+		url:'/note/get_all',
+		data:{
+			id:id
+		}
+	})
+	
+	if(res.code==200){
+		notes.value=res.data
+	}
+}
+
+
+onLoad((options)=>{
+	if(id=='')
+		id=1
+	getNotes()
+	
+})
 
 </script>
 

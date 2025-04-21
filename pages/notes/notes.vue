@@ -7,18 +7,57 @@
 		</view>
 
 		<view class="notes">
-			<NoteCard  v-for="i in 10"/>
+			<NoteCard v-for="note in notes"
+			      :imageUrl="note.images[0]"
+			      :title="note.title"
+			      :content="note.content"
+			      :author="note.username"
+			      :avatarUrl="note.avatarUrl"
+			      :like="note.isliked"
+			      :likes="note.likes"
+				  @click="to_note_info(note.id)"
+			    />
 		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { request } from '../../utils/request';
+import { onLoad } from '@dcloudio/uni-app'
+
+
+const notes=ref([])
+const id=uni.getStorageSync("id")
+
 function toNotePosting(){
 	uni.navigateTo({
-		url:'/pages/notePosting/notePosting'
+		url:`/pages/notePosting/notePosting`,
 	})
 }
+function to_note_info(id){
+	uni.navigateTo({
+		url:`/pages/note_info/note_info?id=${id}`
+	})
+}
+const getNotes = async()=>{
+	let res = await request({
+		url:'/note/get_all',
+		data:{
+			id:id
+		}
+	})
+	
+	if(res.code==200){
+		
+		notes.value=res.data
+	}
+}
+
+
+onLoad((options)=>{
+	getNotes()
+})
 </script>
 
 <style lang="scss" scoped>
