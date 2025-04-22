@@ -69,6 +69,7 @@ defineProps({
 			.name {
 				font-weight: bold;
 				font-size: 28rpx;
+				text-align: left;
 			}
 
 			.starsAndTime {

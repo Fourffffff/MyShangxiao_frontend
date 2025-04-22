@@ -113,7 +113,7 @@ const get_note=async(noteId)=>{
 			noteId:noteId
 		}
 	})
-	console.log(res.data.comments);
+	console.log(res.data);
 	title.value = res.data.note.title || '默认标题';
 	content.value = res.data.note.content || '默认内容';
 	likeCount.value = res.data.note.likeCount || 0;
@@ -121,6 +121,7 @@ const get_note=async(noteId)=>{
 	isliked.value = res.data.isliked;
 	isFav.value = res.data.isfav;
 	comments.value = res.data.comments || [];
+	imageUrls.value=res.data.note.images
 }
 
 

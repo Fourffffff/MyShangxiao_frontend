@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/mine/mine",
+    "pages/notes/notes",
+    "pages/school_discussion/school_discussion",
+    "pages/jobs/jobs",
+    "pages/note_info/note_info",
+    "pages/notePosting/notePosting",
+    "pages/school_judge_info/school_judge_info"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "selectedColor": "#91bf6f",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/common/images/index.png",
+        "selectedIconPath": "/common/images/index_se.png"
+      },
+      {
+        "pagePath": "pages/notes/notes",
+        "text": "动态",
+        "iconPath": "/common/images/notes.png",
+        "selectedIconPath": "/common/images/notes_se.png"
+      },
+      {
+        "pagePath": "pages/school_discussion/school_discussion",
+        "text": "校园评价",
+        "iconPath": "/common/images/smile.png",
+        "selectedIconPath": "/common/images/smile_se.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/common/images/mine.png",
+        "selectedIconPath": "/common/images/mine_se.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

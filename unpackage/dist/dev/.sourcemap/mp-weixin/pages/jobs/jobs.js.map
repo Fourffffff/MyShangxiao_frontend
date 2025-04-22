@@ -1,0 +1,1 @@
+{"version":3,"file":"jobs.js","sources":["../../../../../app/HBuilderX.4.36.2024112817/HBuilderX/plugins/uniapp-cli-vite/uniPage:/cGFnZXMvam9icy9qb2JzLnZ1ZQ"],"sourcesContent":["import MiniProgramPage from 'D:/Learning/Junior-2/Hjw/MyShangxiao/MyShangxiao_frontend/pages/jobs/jobs.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;AACA,GAAG,WAAW,eAAe;"}

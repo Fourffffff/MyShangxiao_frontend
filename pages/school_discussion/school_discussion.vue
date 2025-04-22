@@ -33,21 +33,26 @@
 		</view>
 		 
 		<view class="objCards">
-			<view class="objCard" v-for="i in 10" @click="goto_school_judge_info">
+			<view class="objCard" v-for="judge in judges" >
 				<JudgeObj
-					
-				>
-					
-				</JudgeObj>
+					:rank="judge.rank"
+					:name="judge.name"
+					:description="judge.description"
+					:score="judge.score"
+					@click="goto_school_judge_info(judge.id)"
+				/>
+				<!-- <JudgeObj></JudgeObj> -->
 			</view>
 		</view>
 	</view>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import uniPopup from '@dcloudio/uni-ui/lib/uni-popup/uni-popup.vue';
 import uniIcons from '@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue';
+import { request } from '../../utils/request';
+
 
 const categories = ref([
   { id: 1, name: "教学楼" },
@@ -59,6 +64,20 @@ const categories = ref([
 // 控制弹窗
 const categoryPopup = ref(null);
 const currentType=ref("教学楼");
+
+const judges=ref([])
+
+
+const get_all=async()=>{
+	let res=await request({
+		url:'/judge/get_all',
+		data:{
+			type:currentType.value
+		}
+	})
+	console.log(res);
+	judges.value=res.data
+}
 const openCategoryPopup = () => {
   categoryPopup.value.open(); // 打开弹窗
 };
@@ -74,11 +93,15 @@ const selectCategory = (item) => {
   currentType.value=item.name;
 };
 
-function goto_school_judge_info(){
+function goto_school_judge_info(judgeId){
 	uni.navigateTo({
-		url:'/pages/school_judge_info/school_judge_info'
+		url:`/pages/school_judge_info/school_judge_info?judgeId=${judgeId}`
 	})
 }
+
+onMounted(()=>{
+	get_all()
+})
 </script>
 
 <style lang="scss" scoped>

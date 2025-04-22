@@ -16,7 +16,7 @@
 				</view>
 				<view class="right">
 					<view class="score">
-						{{score}}
+						{{ score.toFixed(1) }} 
 					</view>
 					<view class="stars">
 						<uni-icons type="star-filled" v-for="i in Math.floor(score / 2)" color="gold"></uni-icons>
@@ -34,7 +34,7 @@
 import { ref } from 'vue'
 
 const props = defineProps({
-  rank: { type: Number, default:1},
+  rank: { type:Number , default:1},
   name: { type: String, default: 'A教学楼' },
   score: { type: Number, default: 9.3 },
   description: { type: String, default: '饮水机水很好喝' },
@@ -85,11 +85,17 @@ const props = defineProps({
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
+			
 			.left{
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
 				width: 30%;
+				.name{
+					text-align: left;
+					font-size: 36rpx;
+					text-wrap: nowrap;
+				}
 				.rank{
 					
 					color: #d16f58;

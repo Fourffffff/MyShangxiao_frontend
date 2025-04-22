@@ -1,0 +1,1 @@
+<view class="search-wrapper data-v-6602f27d"><view class="inner data-v-6602f27d"><uni-icons wx:if="{{a}}" class="data-v-6602f27d" u-i="6602f27d-0" bind:__l="__l" u-p="{{a}}"></uni-icons><input class="search-input data-v-6602f27d" type="text" placeholder="{{b}}" bindconfirm="{{c}}" confirm-type="search" value="{{d}}" bindinput="{{e}}"/></view></view>

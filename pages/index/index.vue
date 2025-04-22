@@ -166,7 +166,7 @@ onLoad((options)=>{
 	.waterfall {
 	  column-count: 2;
 	  column-gap: 20rpx;
-	
+		margin-bottom: 48rpx;
 	  NoteCard {
 	    break-inside: avoid; // 防止卡片被打断
 	    

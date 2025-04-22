@@ -1,0 +1,1 @@
+<view class="commentPosting data-v-165fb010"><view class="left data-v-165fb010"><input placeholder="点击输入评论" class="comment-input data-v-165fb010" value="{{a}}" bindinput="{{b}}"/></view><view class="right data-v-165fb010"><view class="btn data-v-165fb010"> 发表 </view></view></view>

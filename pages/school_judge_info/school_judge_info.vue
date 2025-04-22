@@ -6,13 +6,13 @@
 			</view>
 			<view class="unimage">
 				<view class="name">
-					{{name}}
+					{{judge.name}}
 				</view>
 				<view class="intro">
-					{{intro}}
+					{{judge.description}}
 				</view>
 				<view class="type">
-					{{type}}
+					No.{{judge.rank}} {{judge.type}}
 				</view>
 				<view class="ope">
 					<view class="fav op">
@@ -29,7 +29,7 @@
 		</view>
 		<view class="middle-rate">
 		  <view class="score-box">
-		    <view class="left-score">9.3</view>
+		    <view class="left-score">{{judge.score.toFixed(1)}}</view>
 		    <view class="right-bars">
 		      <view class="bar-line" v-for="i in 5" :key="i">
 		        <view class="stars">
@@ -41,18 +41,17 @@
 		      </view>
 		    </view>
 		  </view>
-		  <view class="rate-footer">30人参与评分</view>
+		  <view class="rate-footer">{{judge.count}}人参与评分</view>
 		</view>
 
 		<view class="down_comment">
-			<NoteComment v-for="i in 10"
-				username="流星"
+			<NoteComment v-for="comment in comments"
+				:username="comment.username"
 				avatarUrl="/common/images/test.jpg"
-				:time="time"
-				comment="这个产品真的很好用，界面清爽，功能也很实用！"
+				:comment="comment.content"
 				:likeCount="100"
 				:islike="true"
-				:starNum="3"
+				:starNum="comment.score"
 			/>
 		</view>
 		<CommentPosting></CommentPosting>
@@ -61,33 +60,51 @@
 
 <script setup>
 import { ref } from 'vue';
-const name=ref("A教学楼")
-const intro=ref("简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介")
-const type=ref("教学楼评测")
+import { request } from '../../utils/request';
+import { onLoad } from '@dcloudio/uni-app'
+
+
+
+const judge=ref()
+const comments=ref([])
+
+
 function getBarWidth(index) {
 	// 模拟五个评分档位的比例（5~1星），单位：百分比
-	const widths = [80, 60, 30, 10, 5]
-	return widths[index - 1]
-}
-const time=ref(new Date())
-const likeCount=ref(10)
-const favCount=ref(10)
-const isliked=ref(false)
-isliked.value=true
-const isFav=ref(false)
-isFav.value=true
-function formatDate(date) {
-  const y = date.getFullYear()
-  const m = String(date.getMonth() + 1).padStart(2, '0')
-  const d = String(date.getDate()).padStart(2, '0')
-  const h = String(date.getHours()).padStart(2, '0')
-  const min = String(date.getMinutes()).padStart(2, '0')
-  const s = String(date.getSeconds()).padStart(2, '0')
-  return `${y}-${m}-${d} ${h}:${min}:${s}`
+	const widths = [judge.value.star5,judge.value.star4,judge.value.star3,judge.value.star2,judge.value.star1]
+	return widths[index - 1]/judge.value.count*100
 }
 
-const now = new Date()
-time.value = formatDate(now)
+
+const get_one=async(id)=>{
+	let res=await request({
+		url:'/judge/get_one',
+		data:{
+			id:id
+		}
+	})
+	
+	judge.value=res.data
+}
+
+const get_comments=async(id)=>{
+	let res=await request({
+		url:'/judge/get_comments',
+		data:{
+			id:id
+		}
+	})
+	console.log(res);
+	comments.value=res.data
+}
+
+
+onLoad((options)=>{
+	let id=options.judgeId
+	
+	get_one(id)
+	get_comments(id)
+})
 </script>
 
 <style lang="scss" scoped>
