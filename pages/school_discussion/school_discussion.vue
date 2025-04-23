@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="pagebg sd">
 		<view class="searchbar">
 			<view class="cate" @click="openCategoryPopup">
 				分类
@@ -52,7 +52,7 @@ import { onMounted, ref } from 'vue';
 import uniPopup from '@dcloudio/uni-ui/lib/uni-popup/uni-popup.vue';
 import uniIcons from '@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue';
 import { request } from '../../utils/request';
-
+import { onLoad,onShow } from '@dcloudio/uni-app'
 
 const categories = ref([
   { id: 1, name: "教学楼" },
@@ -63,7 +63,7 @@ const categories = ref([
 
 // 控制弹窗
 const categoryPopup = ref(null);
-const currentType=ref("教学楼");
+const currentType=ref();
 
 const judges=ref([])
 
@@ -91,6 +91,7 @@ const selectCategory = (item) => {
   closeCategoryPopup();
   // 这里可以添加分类选择后的逻辑
   currentType.value=item.name;
+  get_all(currentType.value)
 };
 
 function goto_school_judge_info(judgeId){
@@ -100,14 +101,25 @@ function goto_school_judge_info(judgeId){
 }
 
 onMounted(()=>{
+	
+})
+onShow(() => {
+	currentType.value=uni.getStorageSync('type')|| '教学楼'
 	get_all()
+})
+onLoad((options)=>{
+	
 })
 </script>
 
 <style lang="scss" scoped>
+.sd{
+	padding:16rpx;
+}
 .searchbar{
 	display: flex;
 	justify-content: center;
+	margin:0 16rpx;
 	width: 100%;
 	padding: 0 30rpx;
 	.cate{

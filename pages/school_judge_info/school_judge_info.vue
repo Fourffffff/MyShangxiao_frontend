@@ -64,8 +64,19 @@ import { request } from '../../utils/request';
 import { onLoad } from '@dcloudio/uni-app'
 
 
-
-const judge=ref()
+const judge = ref({
+  name: '',
+  description: '',
+  type: '',
+  star1: 0,
+  star2: 0,
+  star3: 0,
+  star4: 0,
+  star5: 0,
+  rank: 0,
+  score: 0,
+  count: 0
+})
 const comments=ref([])
 
 

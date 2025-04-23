@@ -1,5 +1,5 @@
 <template>
-	<view class="notesPage">
+	<view class="notesPage pagebg">
 		<view class="seachAndPost">
 			
 			<SearchBar></SearchBar>
@@ -24,7 +24,7 @@
 <script setup>
 import { ref } from 'vue';
 import { request } from '../../utils/request';
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad,onShow } from '@dcloudio/uni-app'
 
 
 const notes=ref([])
@@ -55,13 +55,14 @@ const getNotes = async()=>{
 }
 
 
-onLoad((options)=>{
+onShow(()=>{
 	getNotes()
 })
 </script>
 
 <style lang="scss" scoped>
 .notesPage{
+	padding: 20rpx;
 	.seachAndPost{
 		width: 100%;
 		display: flex;

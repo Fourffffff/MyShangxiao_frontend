@@ -29,7 +29,7 @@
 					{{time}}
 				</view>
 				<view class="likeAndFavourite">
-					<view class="like">
+					<view class="like" @click="like">
 						<view class="likeIcon">
 							<uni-icons :type="isliked?'hand-up-filled':'hand-up'" color="#91bf6f"></uni-icons>
 						</view>
@@ -37,7 +37,7 @@
 							{{likeCount}}
 						</view>
 					</view>
-					<view class="favourite">
+					<view class="favourite" @click="fav"> 
 						<view class="FavIcon">
 							<uni-icons :type="isFav?'star-filled':'star'" color="#91bf6f"></uni-icons>
 						</view>
@@ -52,9 +52,9 @@
 			<view class="comment" v-for="comment in comments">
 				<NoteComment
 				      :username="comment.username"          
-				      :avatarUrl="comment.avatarUrl"        
+				      :avatarUrl="comment.avatarUrl"         
 				      :time="comment.time"                 
-				      :comment="comment.comment"            
+				      :comment="comment.content"            
 				      :likeCount="comment.likeCount"        
 				      :islike="comment.islike"              
 				    />
@@ -71,6 +71,7 @@
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app'
 import { request } from '../../utils/request';
+import notesVue from '../notes/notes.vue';
 
 
 const imageUrls = ref(['/common/images/test.jpg','/common/images/test.jpg'])
@@ -85,6 +86,7 @@ const isFav=ref(false)
 isFav.value=true
 const id=uni.getStorageSync("id")
 const comments=ref([])
+let noteId=0
 
 function formatDate(date) {
   const y = date.getFullYear()
@@ -116,18 +118,56 @@ const get_note=async(noteId)=>{
 	console.log(res.data);
 	title.value = res.data.note.title || '默认标题';
 	content.value = res.data.note.content || '默认内容';
-	likeCount.value = res.data.note.likeCount || 0;
-	favCount.value = res.data.note.favCount || 0;
+	likeCount.value = res.data.note.likes|| 0;
+	favCount.value = res.data.note.favs || 0;
 	isliked.value = res.data.isliked;
 	isFav.value = res.data.isfav;
 	comments.value = res.data.comments || [];
 	imageUrls.value=res.data.note.images
 }
-
+const like= async()=>{
+	let res=await request({
+		url:"/note/like",
+		method:'post',
+		data:{
+			id_user:id,
+			id_note:noteId
+		}
+	})
+	if(res.data=="unlike"){
+		isliked.value=false
+		likeCount.value--
+	}
+		
+	else if(res.data=="like"){
+		isliked.value=true
+		likeCount.value++
+	}
+		
+}
+const fav = async()=>{
+	let res=await request({
+		url:"/note/fav",
+		method:'post',
+		data:{
+			id_user:id,
+			id_note:noteId
+		}
+	})
+	if(res.data=="unfav"){
+		isFav.value=false
+		favCount.value--
+	}
+		
+	else if(res.data=="fav"){
+		isFav.value=true
+		favCount.value++
+	}
+}
 
 
 onLoad((options)=>{
-	const noteId=options.id
+	noteId=options.id
 	get_note(noteId)
 })
 </script>
@@ -195,11 +235,17 @@ onLoad((options)=>{
 			justify-content: space-between;
 			gap: 16rpx;
 			.like{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
 				.likeNum{
 					font-size: 24rpx;
 				}
 			}
 			.favourite{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
 				.favNum{
 					font-size: 24rpx;
 				}

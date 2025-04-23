@@ -11,7 +11,7 @@
 						{{rank}}
 					</view>
 					<view class="name">
-						{{name}}
+						  {{name}}
 					</view>
 				</view>
 				<view class="right">
@@ -95,6 +95,7 @@ const props = defineProps({
 					text-align: left;
 					font-size: 36rpx;
 					text-wrap: nowrap;
+					margin-left: 16rpx;
 				}
 				.rank{
 					

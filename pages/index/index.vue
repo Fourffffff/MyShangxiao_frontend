@@ -1,5 +1,5 @@
 <template>
-  <view class="home">
+  <view class="home pagebg">
     <swiper
       class="banner"
       indicator-dots
@@ -23,9 +23,9 @@
 		</view>
 		
 		<view class="card">
-			<view class="type" v-for="i in 8">
-				<img src="/common/images/test.jpg" alt="" />
-				<view>教学楼</view>
+			<view class="type" v-for="type1 in types">
+				<img :src="type1.image" alt="" @click="toDis(type1.typename)"/>
+				<view @click="toDis(type1.typename)">{{type1.typename}}</view>
 			</view>
 		</view>
 	</view>
@@ -47,7 +47,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { onLoad } from '@dcloudio/uni-app'
+import { onLoad,onShow } from '@dcloudio/uni-app'
 import { request } from '../../utils/request';
 
 
@@ -55,6 +55,7 @@ let id=uni.getStorageSync("id");
 const notes=ref([])
 if(id=='')
 	id=1
+const types=ref([])
 
 function to_note_info(id){
 	uni.navigateTo({
@@ -62,7 +63,6 @@ function to_note_info(id){
 	})
 }
 const getNotes = async()=>{
-	
 	let res = await request({
 		url:'/note/get_all',
 		data:{
@@ -75,12 +75,29 @@ const getNotes = async()=>{
 	}
 }
 
+const getJudges = async()=>{
+	let res = await request({
+		url:"/judge/get_types"
+	})
+	types.value=res.data
+	
+}
+function toDis(type){
+	uni.setStorageSync('type',type)
+	uni.switchTab({
+		url:`/pages/school_discussion/school_discussion?type=${type}`
+	})
+}
+
 
 onLoad((options)=>{
 	if(id=='')
 		id=1
 	getNotes()
-	
+	getJudges()
+})
+onShow(()=>{
+	getNotes()
 })
 
 </script>
