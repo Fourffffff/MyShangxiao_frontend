@@ -43,14 +43,18 @@
       </view>
     </view>
 
-    <button class="logout-button">退出</button>
+    <button class="logout-button" @click="out">退出</button>
 
   </view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-
+function out(){
+	uni.reLaunch({
+		url:'/pages/login/login'
+	})
+}
 
 
 

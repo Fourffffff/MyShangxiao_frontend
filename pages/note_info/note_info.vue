@@ -63,7 +63,11 @@
 			</view>
 		</view>
 		
-		<CommentPosting></CommentPosting>
+		<CommentPosting
+			kind="note"
+			:obj_id="noteId"
+			:user_id="id"
+		></CommentPosting>
 	</view>
 </template>
 

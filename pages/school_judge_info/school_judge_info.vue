@@ -2,7 +2,7 @@
 	<view>
 		<view class="up_intro">
 			<view class="image">
-				<image src="/common/images/test.jpg" mode="aspectFill"></image>
+				<image :src="judge.image" mode="aspectFill"></image>
 			</view>
 			<view class="unimage">
 				<view class="name">
@@ -15,16 +15,22 @@
 					No.{{judge.rank}} {{judge.type}}
 				</view>
 				<view class="ope">
-					<view class="fav op">
-						<uni-icons type="star"></uni-icons>
-						收藏
+					<view class="fav op" @click="likechange">
+						<uni-icons type="heart" v-if=" !judge.islike" color="#91bf6f"></uni-icons>
+						<uni-icons type="heart-filled" v-else color='#91bf6f'></uni-icons>
+						喜欢
 					</view>
 					<view class="map op">
 						<uni-icons type="map"></uni-icons>
 						地图
 					</view>
 				</view>
-				
+				<view class="rate">
+					<uni-rate v-model="judge.myscore"></uni-rate>
+					<view class="confirm" @click="makeScore">
+						确认
+					</view>
+				</view>
 			</view>
 		</view>
 		<view class="middle-rate">
@@ -54,7 +60,10 @@
 				:starNum="comment.score"
 			/>
 		</view>
-		<CommentPosting></CommentPosting>
+		<CommentPosting
+		kind="judge"
+		:obj_id="judgeid"
+		:user_id="id"></CommentPosting>
 	</view>
 </template>
 
@@ -75,10 +84,15 @@ const judge = ref({
   star5: 0,
   rank: 0,
   score: 0,
-  count: 0
+  count: 0,
+  myscore:0,
+  islike:false,
+  image:''
 })
 const comments=ref([])
-
+const myscore=ref(5)
+let id=0
+let judgeid=0
 
 function getBarWidth(index) {
 	// 模拟五个评分档位的比例（5~1星），单位：百分比
@@ -87,15 +101,16 @@ function getBarWidth(index) {
 }
 
 
-const get_one=async(id)=>{
+const get_one=async(judgeid)=>{
 	let res=await request({
 		url:'/judge/get_one',
 		data:{
-			id:id
+			judgeid:judgeid,
+			userid:id
 		}
 	})
-	
 	judge.value=res.data
+	console.log(judge.value);
 }
 
 const get_comments=async(id)=>{
@@ -105,16 +120,42 @@ const get_comments=async(id)=>{
 			id:id
 		}
 	})
-	console.log(res);
 	comments.value=res.data
+}
+
+const makeScore=async()=>{
+	let res=await request({
+		url:'/judge/rate',
+		method:'post',
+		data:{
+			id_user:id,
+			id_judge:judgeid,
+			score:judge.value.myscore
+		}
+	})
+	
+}
+
+const likechange=async()=>{
+	let res=await request({
+		url:'/judge/likechange',
+		method:'post',
+		data:{
+			id_user:id,
+			id_judge:judgeid
+		}
+	})
+	if (res.code==200){
+		judge.value.islike=!judge.value.islike
+	}
 }
 
 
 onLoad((options)=>{
-	let id=options.judgeId
-	
-	get_one(id)
-	get_comments(id)
+	judgeid=options.judgeId
+	id=uni.getStorageSync("id")
+	get_one(judgeid)
+	get_comments(judgeid)
 })
 </script>
 
@@ -161,6 +202,17 @@ onLoad((options)=>{
 				border: 1px solid;
 				border-radius: 16rpx;
 				padding:0 16rpx;
+			}
+		}
+		.rate{
+			margin: 24rpx 0;
+			display: flex;
+			justify-content: space-around;
+			.confirm{
+				background-color: $colorr;
+				padding:0 16rpx;
+				color: white;
+				border-radius: 20rpx;
 			}
 		}
 	}
