@@ -5,11 +5,6 @@
 ## Description
 This is the frontend repository for MyShangxiao project.
 
-## Features
-- Feature 1
-- Feature 2
-- Feature 3
-
 ## Installation
 1. Clone the repository
 2. Install dependencies
@@ -29,9 +24,6 @@ npm test
 
 ## Contributing
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/fourffffff/MyShangxiao_frontend/tags).
 
 ## Authors
 - **Author Name** - [GitHub Profile](https://github.com/author-profile)
