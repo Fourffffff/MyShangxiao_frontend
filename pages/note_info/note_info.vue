@@ -67,6 +67,7 @@
 			kind="note"
 			:obj_id="noteId"
 			:user_id="id"
+			@refreshPage="get_note(noteId)"
 		></CommentPosting>
 	</view>
 </template>

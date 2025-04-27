@@ -25,9 +25,14 @@ const props = defineProps({
   obj_id:{type:Number,default:0},
   user_id:{type:Number,default:0}
 })
+const emit = defineEmits(['refreshPage'])
+function refreshPage() {
+  emit('refreshPage')  // 通知页面去刷新
+}
 const post=async()=>{
+	let res=''
 	if(props.kind=='note'){
-		let res =await request({
+		res =await request({
 			url:'/note/comment_post',
 			method:'post',
 			data:{
@@ -39,7 +44,7 @@ const post=async()=>{
 	}
 		
 	else if(props.kind=='judge'){
-		let res=await request({
+		res=await request({
 			url:'/judge/comment_post',
 			method:'post',
 			data:{
@@ -48,6 +53,10 @@ const post=async()=>{
 				content:commentText.value
 			}
 		})
+	}
+	if(res.code=='200'){
+		commentText.value=''
+		refreshPage()
 	}
 		
 }

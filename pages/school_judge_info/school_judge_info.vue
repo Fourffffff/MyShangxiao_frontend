@@ -63,7 +63,8 @@
 		<CommentPosting
 		kind="judge"
 		:obj_id="judgeid"
-		:user_id="id"></CommentPosting>
+		:user_id="id"
+		@refreshPage="get_comments(judgeid)"></CommentPosting>
 	</view>
 </template>
 
@@ -93,6 +94,7 @@ const comments=ref([])
 const myscore=ref(5)
 let id=0
 let judgeid=0
+
 
 function getBarWidth(index) {
 	// 模拟五个评分档位的比例（5~1星），单位：百分比
@@ -154,6 +156,7 @@ const likechange=async()=>{
 onLoad((options)=>{
 	judgeid=options.judgeId
 	id=uni.getStorageSync("id")
+	
 	get_one(judgeid)
 	get_comments(judgeid)
 })
