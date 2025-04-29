@@ -53,7 +53,7 @@
 		<view class="down_comment">
 			<NoteComment v-for="comment in comments"
 				:username="comment.username"
-				avatarUrl="/common/images/test.jpg"
+				:avatarUrl="comment.avatarUrl"
 				:comment="comment.content"
 				:likeCount="100"
 				:islike="true"

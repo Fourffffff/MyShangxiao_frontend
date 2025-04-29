@@ -3,11 +3,11 @@
     <view class="user-info-card">
       <view class="avatar-wrapper">
         <view class="avatar-placeholder">
-          <uni-icons type="person-filled" size="60rpx" color="#fff"></uni-icons>
+          <image size="60rpx" color="#fff" :src="imageUrl" mode="aspectFit" @click="uploadAvatar"></image>
         </view>
       </view>
       <view class="info-wrapper">
-        <text class="nickname">用户名</text>
+        <text class="nickname">{{username}}</text>
       
       </view>
     </view>
@@ -49,13 +49,93 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
+import { request } from '../../utils/request';
+
+
+const username=ref("")
+const imageUrl=ref("")
+const id=uni.getStorageSync("id")
+const images=ref([])
+
 function out(){
 	uni.reLaunch({
 		url:'/pages/login/login'
 	})
 }
 
+const getAvatar=async()=>{
+	let res= await request({
+		url:'/user/get_avatar',
+		data:{
+			id:id
+		}
+	})
+	imageUrl.value=res.data || '/common/images/mine.png'
+}
+
+const getUsername=async()=>{
+	let res=await request({
+		url:'/user/get_username',
+		data:{
+			id:id
+		}
+	})
+	username.value=res.data
+}
+
+const uploadAvatar = async () => {
+  // 先让用户选图片
+  uni.chooseImage({
+    count: 1,
+    success: async (res) => {
+      const tempFilePath = res.tempFilePaths[0]; // 选的图片路径
+
+      // 再去上传选中的图片
+      const uploadRes = await new Promise((resolve, reject) => {
+        uni.uploadFile({
+          url: 'http://localhost:8000/note/upload_img',
+          filePath: tempFilePath,
+          name: 'file',
+          success: resolve,
+          fail: reject
+        });
+      });
+
+      const result = JSON.parse(uploadRes.data); // 解析后端返回
+      if (result.code === 200) {
+        imageUrl.value = result.data; // 更新页面上的头像地址
+
+        // 然后告诉服务器更新用户头像
+        await request({
+          url: "/user/avatar_update",
+		  method:'post',
+          data: {
+            id: id,
+            avatar: imageUrl.value
+          }
+        });
+      } else {
+        uni.showToast({
+          title: '上传失败',
+          icon: 'none'
+        });
+      }
+    },
+    fail: (err) => {
+      console.error('选择图片失败', err);
+    }
+  });
+};
+
+
+
+
+onMounted(()=>{
+	
+	getAvatar()
+	getUsername()
+})
 
 
 </script>
