@@ -1,11 +1,13 @@
 const baseurl="http://localhost:8000"
 export function request(config={}){
+	const token = uni.getStorageSync('token')
+	
 	let {
 		url,
 		method='GET',
 		data,
 		header = {
-					"Content-Type": "application/json"  // 默认 JSON 请求头
+					Authorization: token ? `Bearer ${token}` : ''
 				}
 	} = config
 	url=baseurl+url

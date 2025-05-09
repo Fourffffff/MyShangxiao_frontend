@@ -97,7 +97,7 @@ const handleLogin = async () => {
   
   if(res.code==200){
 	  
-	  uni.setStorageSync('id', res.data);
+	  uni.setStorageSync('token', res.data);
 	  
 	  uni.switchTab({
 	  	url:'/pages/index/index'

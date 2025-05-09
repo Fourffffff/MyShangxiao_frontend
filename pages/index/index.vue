@@ -51,10 +51,8 @@ import { onLoad,onShow } from '@dcloudio/uni-app'
 import { request } from '../../utils/request';
 
 
-let id=uni.getStorageSync("id");
+
 const notes=ref([])
-if(id=='')
-	id=1
 const types=ref([])
 
 function to_note_info(id){
@@ -91,14 +89,10 @@ function toDis(type){
 
 
 onLoad((options)=>{
-	if(id=='')
-		id=1
 	getNotes()
 	getJudges()
 })
-onShow(()=>{
-	getNotes()
-})
+
 
 </script>
 

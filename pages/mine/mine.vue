@@ -52,10 +52,9 @@
 import { ref,onMounted } from 'vue';
 import { request } from '../../utils/request';
 
-
 const username=ref("")
 const imageUrl=ref("")
-const id=uni.getStorageSync("id")
+let id=uni.getStorageSync("id")
 const images=ref([])
 
 function out(){
@@ -64,22 +63,18 @@ function out(){
 	})
 }
 
-const getAvatar=async()=>{
-	let res= await request({
-		url:'/user/get_avatar',
-		data:{
-			id:id
-		}
+const getAvatar = async () => {
+	let res = await request({
+		url: '/user/get_avatar',
+		method: 'GET',
 	})
-	imageUrl.value=res.data || '/common/images/mine.png'
+	imageUrl.value = res.data || '/common/images/mine.png'
 }
+
 
 const getUsername=async()=>{
 	let res=await request({
 		url:'/user/get_username',
-		data:{
-			id:id
-		}
 	})
 	username.value=res.data
 }
@@ -132,6 +127,7 @@ const uploadAvatar = async () => {
 
 
 onMounted(()=>{
+	
 	
 	getAvatar()
 	getUsername()
