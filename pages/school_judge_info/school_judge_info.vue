@@ -108,7 +108,6 @@ const get_one=async(judgeid)=>{
 		url:'/judge/get_one',
 		data:{
 			judgeid:judgeid,
-			userid:id
 		}
 	})
 	judge.value=res.data
@@ -130,7 +129,6 @@ const makeScore=async()=>{
 		url:'/judge/rate',
 		method:'post',
 		data:{
-			id_user:id,
 			id_judge:judgeid,
 			score:judge.value.myscore
 		}
@@ -143,7 +141,6 @@ const likechange=async()=>{
 		url:'/judge/likechange',
 		method:'post',
 		data:{
-			id_user:id,
 			id_judge:judgeid
 		}
 	})

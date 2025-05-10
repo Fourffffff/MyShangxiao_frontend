@@ -106,8 +106,7 @@ const uploadAvatar = async () => {
           url: "/user/avatar_update",
 		  method:'post',
           data: {
-            id: id,
-            avatar: imageUrl.value
+            avatarUrl: imageUrl.value
           }
         });
       } else {

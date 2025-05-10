@@ -116,7 +116,6 @@ const get_note=async(noteId)=>{
 	let res=await request({
 		url:'/note/get_one',
 		data:{
-			userId:id,
 			noteId:noteId
 		}
 	})
@@ -135,7 +134,6 @@ const like= async()=>{
 		url:"/note/like",
 		method:'post',
 		data:{
-			id_user:id,
 			id_note:noteId
 		}
 	})

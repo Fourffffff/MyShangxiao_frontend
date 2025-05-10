@@ -37,7 +37,6 @@ const post=async()=>{
 			method:'post',
 			data:{
 				id_note:props.obj_id,
-				id_user:props.user_id,
 				content:commentText.value
 			}
 		})

@@ -63,9 +63,6 @@ function to_note_info(id){
 const getNotes = async()=>{
 	let res = await request({
 		url:'/note/get_all',
-		data:{
-			id:id
-		}
 	})
 	
 	if(res.code==200){
