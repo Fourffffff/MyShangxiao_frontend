@@ -8,26 +8,25 @@
       </view>
       <view class="info-wrapper">
         <text class="nickname">{{username}}</text>
-      
       </view>
     </view>
 
     <view class="function-list">
-      <view class="list-item">
+      <view class="list-item" @click="goto_collection">
         <view class="icon-wrapper">
           <uni-icons type="star-filled" size="44rpx"></uni-icons>
         </view>
         <text class="label">收藏</text>
         <uni-icons type="arrowright" size="40rpx" color="#888"></uni-icons>
       </view>
-      <view class="list-item">
+      <view class="list-item" @click="goto_mynotes">
         <view class="icon-wrapper">
           <uni-icons type="chatboxes-filled" size="44rpx"></uni-icons>
         </view>
         <text class="label">我的动态</text>
         <uni-icons type="arrowright" size="40rpx" color="#888"></uni-icons>
       </view>
-      <view class="list-item">
+      <view class="list-item" @click="goto_passwordchange">
         <view class="icon-wrapper">
           <uni-icons type="locked-filled" size="44rpx"></uni-icons>
         </view>
@@ -122,12 +121,24 @@ const uploadAvatar = async () => {
   });
 };
 
-
+const goto_collection=()=>{
+	uni.navigateTo({
+		url:'/pages/notes_coll/notes_coll?type=coll'
+	})
+}
+const goto_mynotes=()=>{
+	uni.navigateTo({
+		url:'/pages/notes_coll/notes_coll?type=mynotes'
+	})
+}
+const goto_passwordchange=()=>{
+	uni.navigateTo({
+		url:'/pages/password_change/password_change'
+	})
+}
 
 
 onMounted(()=>{
-	
-	
 	getAvatar()
 	getUsername()
 })

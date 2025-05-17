@@ -3,7 +3,7 @@
 		<view class="seachAndPost">
 			
 			<SearchBar></SearchBar>
-			<img src="/common/images/add.png" alt="" @click="toNotePosting"/>
+			
 		</view>
 
 		<view class="notes">
@@ -30,19 +30,23 @@ import { onLoad,onShow } from '@dcloudio/uni-app'
 const notes=ref([])
 const id=uni.getStorageSync("id")
 
-function toNotePosting(){
-	uni.navigateTo({
-		url:`/pages/notePosting/notePosting`,
-	})
-}
 function to_note_info(id){
 	uni.navigateTo({
 		url:`/pages/note_info/note_info?id=${id}`
 	})
 }
-const getNotes = async()=>{
+const getCollNotes = async()=>{
 	let res = await request({
-		url:'/note/get_all'
+		url:'/note/get_collection'
+	})
+	if(res.code==200){
+		notes.value=res.data
+	}
+	console.log(res.data);
+}
+const getMyNotes = async()=>{
+	let res = await request({
+		url:'/note/get_mynotes'
 	})
 	if(res.code==200){
 		
@@ -51,8 +55,12 @@ const getNotes = async()=>{
 }
 
 
-onShow(()=>{
-	getNotes()
+onLoad((option)=>{
+	let type=option.type
+	if(type=='coll')
+		getCollNotes()
+	else
+		getMyNotes()
 })
 </script>
 
