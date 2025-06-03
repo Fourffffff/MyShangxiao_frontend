@@ -47,7 +47,7 @@
       </view>
 	  
       
-      <button class="login-btn" @click="handleLogin">注册</button>
+      <button class="login-btn" @click="handleRegister">注册</button>
       
       <view class="register-link" @click="gotoLogin">
         <text>登录？</text>
@@ -63,6 +63,7 @@
 <script setup>
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app';
+import { request } from '../../utils/request';
 
 // 表单数据
 const formData = ref({
@@ -107,6 +108,24 @@ function send_verify_code(){
 			console.log(res.data);
 		}
 	})
+}
+
+const handleRegister=async()=>{
+	let res=await request({
+		url:'/user/register',
+		method:'POST',
+		data:{
+			email:formData.value.email,
+			code:formData.value.verify,
+			password:formData.value.password
+		}
+	})
+	console.log(res.code);
+	if (res.code==200){
+		uni.redirectTo({
+			url:'/pages/login/login'
+		})
+	}
 }
 onLoad(() => {
   // 页面加载时可以做的初始化操作

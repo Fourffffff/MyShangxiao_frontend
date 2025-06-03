@@ -105,9 +105,13 @@ const handleLogin = async () => {
   }
 	
 };
+const test=()=>{
+	console.log(this);
+}
 
 onLoad(() => {
   // 页面加载时可以做的初始化操作
+  test()
 });
 </script>
 
